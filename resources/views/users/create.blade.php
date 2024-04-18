@@ -25,6 +25,13 @@
     </form>
 </div>
 @endsection
-@error('name')
-    <div class="alert alert-danger">{{ $message }}</div>
-@enderror
+@if ($errors->any())
+    <div style="color: red;">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+<!-- Форма... -->

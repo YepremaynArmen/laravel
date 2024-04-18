@@ -37,7 +37,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+public function store(Request $request)
     {
         // Валидация входных данных
         $validatedData = $request->validate([
@@ -46,20 +46,15 @@ class UserController extends Controller
             'login' => 'required|string|max:255|unique:users',
             'password' => 'required|string|min:8',
         ]);
-        try {
-            // Создание нового пользователя
-            $user = User::create([
-                'name' => $validatedData['name'],
-                'birthdate' => $validatedData['birthdate'],
-                'login' => $validatedData['login'],
-                'password' => Hash::make($validatedData['password']),
-            ]);
-            // Перенаправление на страницу со списком пользователей с сообщением об успешном добавлении
-            return redirect()->route('users.index')->with('success', 'Пользователь успешно добавлен.');
-        } catch (QueryException $e) {
-            // Вывод ошибки
-            return redirect()->back()->withInput()->withErrors('Ошибка добавления пользователя: ' . $e->getMessage());
-        }
+        // Попытка сохранения пользователя в базу данных
+        $user = new User;
+        $user->name = $validatedData['name'];
+        $user->birthdate = $validatedData['birthdate'];
+        $user->login = $validatedData['login'];
+        $user->password = Hash::make($validatedData['password']); // Хеширование пароля перед сохранением
+        $user->save(); // Сохранение пользователя в базу данных
+        // Перенаправление на страницу со списком пользователей с сообщением об успешном добавлении
+        return redirect()->route('users.index')->with('success', 'Пользователь успешно добавлен.');
     }
 
     /**
@@ -82,7 +77,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+       $user = User::findOrFail($id);
+       return view('users.edit', compact('user'));
     }
 
     /**
@@ -98,7 +94,6 @@ class UserController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'birthdate' => 'required|date',
-            'email' => 'required|email|unique:users,email,' . $user->id,
             'login' => 'required|unique:users,login,' . $user->id,
             'password' => 'sometimes|nullable|min:8',
         ]);
@@ -110,6 +105,10 @@ class UserController extends Controller
         $user->update($validatedData);
         return redirect()->route('users.index')->with('success', 'Данные пользователя успешно обновлены.');
     }
+    
+
+    
+    
 
     /**
      * Remove the specified resource from storage.
