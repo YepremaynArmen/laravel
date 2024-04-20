@@ -1,22 +1,22 @@
-<!-- resources/views/layouts/app.blade.php -->
+{{-- resources/views/layouts/app.blade.php --}}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ваше приложение</title>
-    <!-- Сюда можно добавить ссылки на CSS -->
+    <title>@yield('title', 'Стандартный заголовок')</title>
+    <!-- Сюда можно добавить другие мета-теги, стили и скрипты -->
 </head>
 <body>
     <header>
-        <!-- Здесь может быть шапка вашего сайта -->
+        <!-- Здесь может быть верхнее меню или другой общий контент -->
+        <h1 >Заголовок</h1>
     </header>
     <main>
         @yield('content')
     </main>
     <footer>
-        <!-- Здесь может быть подвал вашего сайта -->
+        <!-- Здесь может быть подвал сайта -->
     </footer>
-    <!-- Сюда можно добавить JavaScript -->
+    <!-- Сюда можно добавить скрипты, которые нужны на каждой странице -->
 </body>
 </html>

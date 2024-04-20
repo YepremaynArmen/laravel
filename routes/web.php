@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MainController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,3 +21,7 @@ Route::get('/', function () {
 
 // Ресурсный маршрут для пользователей, включает маршруты для CRUD операций
 Route::resource('users', UserController::class);
+
+
+Route::get('/new_index', [MainController::class, 'index']);
+Route::get('/contacts', [MainController::class, 'contacts']);
