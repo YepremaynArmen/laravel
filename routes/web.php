@@ -24,4 +24,6 @@ Route::resource('users', UserController::class);
 
 
 Route::get('/new_index', [MainController::class, 'index']);
+Route::get('/about', [MainController::class, 'about']);
 Route::get('/contacts', [MainController::class, 'contacts']);
+Route::post('/contacts', [MainController::class, 'store'])->name('contacts.send');

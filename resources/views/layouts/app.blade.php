@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>@yield('title', 'Стандартный заголовок')</title>
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!-- Сюда можно добавить другие мета-теги, стили и скрипты -->
 </head>
 <body>
