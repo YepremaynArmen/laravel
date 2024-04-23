@@ -26,14 +26,15 @@ class MainController extends Controller
         'name' => 'required|max:255',
         'email' => 'required|email',
         'subject' => 'required|max:255',
-        'message' => 'required',
+        'message' => 'required'
     ]);
     try {
         // Создание письма с использованием Mailable класса
         $email = new ContactMail($validatedData);
         // Отправка письма
-        Mail::to('recipient@example.com')->send($email);
-        // Перенаправление обратно с сообщением об успешной отправке
+       // Mail::to('earmen.laravel@it-schools.org')->send($email);
+        Mail::to($request->input('email'))->send($email);
+       \Log::info('Перенаправление с сообщением об успехе.');
         return redirect()->back()->with('success', 'Ваше сообщение было успешно отправлено.');
     } catch (\Exception $e) {
         // Запись исключения в лог
