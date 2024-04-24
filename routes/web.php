@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\MyFormController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,3 +28,6 @@ Route::get('/new_index', [MainController::class, 'index']);
 Route::get('/about', [MainController::class, 'about']);
 Route::get('/contacts', [MainController::class, 'contacts']);
 Route::post('/contacts', [MainController::class, 'send'])->name('contacts.send');
+Route::get('/myform', [MyFormController::class, 'showForm'])->name('myform.show');
+Route::post('/myform', [MyFormController::class, 'submit'])->name('myform.submit');
+Route::get('/success-page', function () {return view('success');})->name('success.page');

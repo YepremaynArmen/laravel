@@ -39,3 +39,23 @@
 @section('footer')
     <p>Наш телефон: 123-456-7890</p>
 @endsection
+
+
+
+
+
+
+
+
+
+php
+$validator = Validator::make($request->all(), [
+    'name' => 'required|max:255',
+    'email' => 'required|email',
+    'message' => 'required|min:10',
+]);
+if ($validator->fails()) {
+    return redirect('form')
+                ->withErrors($validator)
+                ->withInput();
+}

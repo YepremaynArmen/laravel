@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,6 +35,15 @@ class AppServiceProvider extends ServiceProvider
                         $query->time
                     );
                 });
+        Validator::extend('customrule', function ($attribute, $value, $parameters, $validator) {
+            return Str::startsWith($value, 'start_');
+        });
+
     }
     }
+    
+
+
+    
+    
 }
