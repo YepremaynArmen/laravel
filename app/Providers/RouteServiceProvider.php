@@ -18,6 +18,7 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     public const HOME = '/home';
+    public static $redirectTo = '/dashboard';
 
     /**
      * The controller namespace for the application.
@@ -47,6 +48,10 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
         });
+        
+        if (method_exists(Fortify::class, 'redirectTo')) {
+            Fortify::redirectTo('/login');
+        }
     }
 
     /**
