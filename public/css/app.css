@@ -41,3 +41,41 @@
     border-color: #f5c6cb;
     color: #721c24;
 }
+
+
+/* Стили для навигационной панели */
+.navbar {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between; /* Выровнять элементы по обеим сторонам */
+    align-items: center; /* Вертикальное выравнивание */
+    padding: 0 15px; /* Паддинг для навигационной панели */
+}
+/* Стили для выпадающего меню пользователя */
+.user-menu {
+    position: relative;
+}
+.user-menu .dropdown-toggle {
+    cursor: pointer;
+}
+.user-menu .dropdown-menu {
+    position: absolute;
+    top: 100%; /* Расположение под триггером */
+    right: 10px; /* Прижать к правому краю */
+    min-width: 150px; /* Минимальная ширина выпадающего списка */
+    z-index: 1000; /* Показать поверх других элементов */
+    display: none; /* По умолчанию скрыть */
+}
+.user-menu:hover .dropdown-menu {
+    display: block; /* Показать при наведении */
+}
+/* Стили для ссылок в выпадающем меню пользователя */
+.user-menu .dropdown-menu a {
+    padding: 10px;
+    display: block; /* Сделать ссылки блочными для заполнения всей ширины */
+    color: #333; /* Цвет текста ссылок */
+    text-decoration: none; /* Убрать подчеркивание */
+}
+.user-menu .dropdown-menu a:hover {
+    background-color: #f6f6f6; /* Цвет фона при наведении */
+}

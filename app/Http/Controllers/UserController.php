@@ -17,6 +17,11 @@ class UserController extends Controller
      */
     public function index()
     {
+        // Проверка доступа к странице
+        if (Gate::denies('view-users-page', auth()->user())) {
+            abort(403);
+        }
+        // Получение списка пользователей и отображение страницы
         $users = User::all();
         return view('users.index', compact('users'));
     }

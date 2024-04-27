@@ -25,6 +25,11 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        Gate::define('view-users-page', function ($user) {
+            // Только администраторы могут просматривать страницу пользователей
+            return $user->is_admin;
+        });        
+        
         //
     }
 }

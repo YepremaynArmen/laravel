@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\MyFormController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,6 +29,10 @@ Route::resource('users', UserController::class);
 Route::get('/new_index', [MainController::class, 'index']);
 Route::get('/about', [MainController::class, 'about']);
 Route::get('/contacts', [MainController::class, 'contacts']);
+//Route::get('/about', [MainController::class, 'about'])->middleware('auth');
+//Route::get('/contacts', [MainController::class, 'contacts'])->middleware('auth');
+
+
 Route::post('/contacts', [MainController::class, 'send'])->name('contacts.send');
 Route::get('/myform', [MyFormController::class, 'showForm'])->name('myform.show');
 Route::post('/myform', [MyFormController::class, 'submit'])->name('myform.submit');
@@ -44,3 +49,23 @@ Route::get('/login', [LoginController::class, 'create'])->middleware('guest')->n
 //Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
 //Route::post('/login', 'Auth\LoginController@login');
 //Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+
+Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('auth');
+// Перенаправление с корневого URL на /home
+Route::redirect('/', '/home', 301);
+Route::redirect('/index', '/home', 301);
+
+
+
+
+
+public function edit(User $user)
+{
+    $this->authorize('edit', $user);
+    // Код для редактирования учетной записи...
+}
+public function create()
+{
+    $this->authorize('add', User::class);
+    // Код для добавления нового пользователя...
+}

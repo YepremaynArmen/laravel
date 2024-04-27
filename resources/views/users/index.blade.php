@@ -1,4 +1,9 @@
 {{-- resources/views/users/index.blade.php --}}
+@can('view-users-page', auth()->user())
+    {{-- Код для отображения страницы /users, если пользователь авторизован и имеет право её просмотра --}}
+@else
+    {{-- Сообщение или код для пользователей без права просмотра страницы /users --}}
+@endcan
 @extends('layouts.app')
 @section('content')
 <h1>Список пользователей</h1> 
@@ -28,4 +33,4 @@
         </td> 
     </tr> @endforeach 
 </table> 
-@endsection 
+@endsection
