@@ -21,6 +21,11 @@
             <input type="text" name="login" id="login" value="{{ $user->login }}" required>
         </div>
         <div>
+            <label for="email">email:</label>
+            <input type="text" name="email" id="email" value="{{ $user->email }}" required>
+        </div>
+
+        <div>
             <label for="password">Пароль:</label>
             <input type="password" name="password" id="password" value="{{ $user->password }}" required>
         </div>            

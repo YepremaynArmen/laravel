@@ -13,7 +13,10 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        'App\Models\Model' => 'App\Policies\ModelPolicy',
+        'Spatie\Permission\Models\Role' => 'App\Policies\RolePolicy',
+        'Spatie\Permission\Models\Permission' => 'App\Policies\PermissionPolicy',
+        
     ];
 
     /**
@@ -25,11 +28,13 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('view-users-page', function ($user) {
-            // Только администраторы могут просматривать страницу пользователей
-            return $user->is_admin;
-        });        
+//        Gate::define('view-users-page', function ($user) {
+//            // Только администраторы могут просматривать страницу пользователей
+//            return $user->is_admin;
+//        });        
         
-        //
+        Gate::define('view-users-page', function ($user) {
+            return $user->hasPermissionTo('view users');
+        });        
     }
 }

@@ -1,36 +1,40 @@
-{{-- resources/views/users/index.blade.php --}}
-@can('view-users-page', auth()->user())
-    {{-- Код для отображения страницы /users, если пользователь авторизован и имеет право её просмотра --}}
-@else
-    {{-- Сообщение или код для пользователей без права просмотра страницы /users --}}
-@endcan
 @extends('layouts.app')
+
 @section('content')
-<h1>Список пользователей</h1> 
-<a href="{{ route('users.create') }}" class="btn btn-primary">Добавить пользователя</a>
-<table> 
-    <tr> 
-        <th>ID</th> 
-        <th>Имя</th> 
-        <th>Дата рождения</th> 
-        <th>Логин</th> 
-        <th>Действия</th> 
-    </tr> @foreach ($users as $user) 
-    <tr> 
-        <td>{{ $user->id }}</td> 
-        <td>{{ $user->name }}</td> 
-        <td>{{ $user->birthdate }}</td> 
-        <td>{{ $user->login }}</td> 
-        <td> 
-            <a href="{{ route('users.show', $user->id) }}">Просмотр
-            </a> 
-            <a href="{{ route('users.edit', $user->id) }}">Редактировать
-            </a> 
-            <form action="{{ route('users.destroy', $user->id) }}" method="POST"> @csrf @method('DELETE') 
-                <button type="submit">Удалить
-                </button> 
-            </form> 
-        </td> 
-    </tr> @endforeach 
-</table> 
+<div class="container">
+    <h1>Пользователи</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Имя</th>
+                <th>Email</th>
+                <th>Роли</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($users as $user)
+                <tr>
+                    <td>{{ $user->name }}</td>
+                    <td>{{ $user->email }}</td>
+                    <td>{{ $user->getRoleNames()->join(', ') }}</td>
+                    <td>
+                        <form action="{{ route('users.assign_role', $user) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <select name="role">
+                                @foreach ($roles as $role)
+                                    <option value="{{ $role->id }}" {{ $user->hasRole($role->name) ? 'selected' : '' }}>
+                                        {{ $role->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <button type="submit">Назначить роль</button>
+                        </form>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
 @endsection

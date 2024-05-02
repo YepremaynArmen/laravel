@@ -53,19 +53,16 @@ Route::get('/login', [LoginController::class, 'create'])->middleware('guest')->n
 Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('auth');
 // Перенаправление с корневого URL на /home
 Route::redirect('/', '/home', 301);
-Route::redirect('/index', '/home', 301);
+Route::redirect('/index', '/home', 301);        
 
+// Даем маршруту имя используя метод name()
+Route::get('/users', [UserController::class, 'index'])->name('users.index')->middleware('check.permissions');
+//Route::get('/no-access', function () {
+//    return view('no-access'); // Создайте соответствующий шаблон в resources/views/no-access.blade.php
+//});
 
-
-
-
-public function edit(User $user)
-{
-    $this->authorize('edit', $user);
-    // Код для редактирования учетной записи...
-}
-public function create()
-{
-    $this->authorize('add', User::class);
-    // Код для добавления нового пользователя...
-}
+// Роли
+Route::resource('roles', \App\Http\Controllers\RoleController::class);
+// Разрешения
+Route::resource('permissions', \App\Http\Controllers\PermissionController::class);
+Route::put('/users/{user}/assign_role', [\App\Http\Controllers\UserController::class, 'assignRole'])->name('users.assign_role');

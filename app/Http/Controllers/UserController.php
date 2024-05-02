@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use App\Models\User;
+use Illuminate\Support\Facades\Gate;
+use Spatie\Permission\Models\Role;
+
 
 class UserController extends Controller
 {
@@ -22,8 +25,14 @@ class UserController extends Controller
             abort(403);
         }
         // Получение списка пользователей и отображение страницы
+        //$users = User::all();
+
         $users = User::all();
-        return view('users.index', compact('users'));
+        $roles = Role::all();
+        return view('users.index', compact('users', 'roles'));        
+        
+        
+        //return view('users.index', compact('users'));
     }
 
     /**
@@ -100,6 +109,7 @@ class UserController extends Controller
             'name' => 'required|max:255',
             'birthdate' => 'required|date',
             'login' => 'required|unique:users,login,' . $user->id,
+            'email' => 'required|unique:users,email,' ,
             'password' => 'sometimes|nullable|min:8',
         ]);
         if (!empty($validatedData['password'])) {
@@ -127,4 +137,17 @@ class UserController extends Controller
         $user->delete(); // Удаляем пользователя
         return redirect()->route('users.index')->with('success', 'Пользователь успешно удален.');
     }
+    
+    public function assignRole(Request $request, User $user)
+    {
+        $role = Role::findById($request->input('role'));
+        if ($role) {
+            $user->syncRoles($role);
+            return back()->with('success', 'Роль успешно назначена.');
+        }
+
+        return back()->with('error', 'Не удалось назначить роль.');
+    }    
+    
+    
 }

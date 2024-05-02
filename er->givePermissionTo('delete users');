@@ -1,0 +1,53 @@
+[90m= [39m[34;4mApp\Models\User[39;24m {#5977
+    [34mid[39m: [35m3[39m,
+    [34mname[39m: "[32mAdmin User[39m",
+    [34mbirthdate[39m: [36mnull[39m,
+    [34mcreated_at[39m: "[32m2024-05-02 11:46:07[39m",
+    [34mlogin[39m: [36mnull[39m,
+    [34mpassword[39m: "[32m$2y$10$63nDB5ej7MYylPngEZxb5OHjE0aUyPrBbHk7grhx3Bv.SO6AI/feS[39m",
+    [34memail[39m: "[32mearmen@it-schools.org[39m",
+    [34mtwo_factor_secret[39m: [36mnull[39m,
+    [34mtwo_factor_recovery_codes[39m: [36mnull[39m,
+    [34mtwo_factor_confirmed_at[39m: [36mnull[39m,
+    [34mpermissions[39m: [34;4mIlluminate\Database\Eloquent\Collection[39;24m {#6086
+      [34mall[39m: [
+        [34;4mSpatie\Permission\Models\Permission[39;24m {#6101
+          [34mid[39m: [35m1[39m,
+          [34mname[39m: "[32mview users[39m",
+          [34mguard_name[39m: "[32mweb[39m",
+          [34mcreated_at[39m: "[32m2024-05-02 06:33:57[39m",
+          [34mupdated_at[39m: "[32m2024-05-02 06:33:57[39m",
+          [34mpivot[39m: [34;4mIlluminate\Database\Eloquent\Relations\MorphPivot[39;24m {#6036
+            [34mmodel_id[39m: [35m3[39m,
+            [34mpermission_id[39m: [35m1[39m,
+            [34mmodel_type[39m: "[32mApp\Models\User[39m",
+          },
+        },
+        [34;4mSpatie\Permission\Models\Permission[39;24m {#6104
+          [34mid[39m: [35m2[39m,
+          [34mname[39m: "[32mcreate users[39m",
+          [34mguard_name[39m: "[32mweb[39m",
+          [34mcreated_at[39m: "[32m2024-05-02 07:35:00[39m",
+          [34mupdated_at[39m: "[32m2024-05-02 07:35:00[39m",
+          [34mpivot[39m: [34;4mIlluminate\Database\Eloquent\Relations\MorphPivot[39;24m {#6094
+            [34mmodel_id[39m: [35m3[39m,
+            [34mpermission_id[39m: [35m2[39m,
+            [34mmodel_type[39m: "[32mApp\Models\User[39m",
+          },
+        },
+        [34;4mSpatie\Permission\Models\Permission[39;24m {#6105
+          [34mid[39m: [35m4[39m,
+          [34mname[39m: "[32m edit users[39m",
+          [34mguard_name[39m: "[32mweb[39m",
+          [34mcreated_at[39m: "[32m2024-05-02 07:35:01[39m",
+          [34mupdated_at[39m: "[32m2024-05-02 07:35:01[39m",
+          [34mpivot[39m: [34;4mIlluminate\Database\Eloquent\Relations\MorphPivot[39;24m {#6049
+            [34mmodel_id[39m: [35m3[39m,
+            [34mpermission_id[39m: [35m4[39m,
+            [34mmodel_type[39m: "[32mApp\Models\User[39m",
+          },
+        },
+      ],
+    },
+  }
+

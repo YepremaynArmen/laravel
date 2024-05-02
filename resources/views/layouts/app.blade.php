@@ -10,10 +10,15 @@
 </head>
 <body>
     <div id="app">
+        <a class="" href="{{ route('roles.index') }}">{{ __('Роли') }}</a> 
+        <a class="" href="{{ route('users.index') }}">{{ __('Пользователи') }}</a> 
+        <a class="" href="{{ route('permissions.index') }}">{{ __('Разрешения') }}</a> 
+        
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <!-- Вставьте здесь логотип и ссылки на навигацию, если необходимо -->
                 <div class="navbar-nav ml-auto">
+                    
                     <!-- Аутентификация и пользовательские ссылки -->
                     @guest
                         <a class="nav-link" href="{{ route('login') }}">{{ ('Login') }}</a>
@@ -21,6 +26,11 @@
                             <a class="nav-link" href="{{ route('register') }}">{{ ('Register') }}</a>
                         @endif
                     @else
+
+                    
+ 
+                    
+                    
                         <div class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" 
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
