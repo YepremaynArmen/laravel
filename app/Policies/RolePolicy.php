@@ -2,10 +2,10 @@
 
 namespace App\Policies;
 
-use App\Models\Role;
+//use App\Models\Role;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Role as SpatieRole;
 
 class RolePolicy
 {
@@ -29,7 +29,7 @@ class RolePolicy
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Role $role)
+    public function view(User $user, SpatieRole $role)
     {
         //
     }
@@ -52,7 +52,7 @@ class RolePolicy
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Role $role)
+    public function update(User $user, SpatieRole $role)
     {
        return $user->hasRole('admin');
     }
@@ -64,7 +64,7 @@ class RolePolicy
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Role $role)
+    public function delete(User $user, SpatieRole $role)
     {
         return $user->hasRole('admin');
     }
@@ -85,7 +85,7 @@ class RolePolicy
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Role $role)
+    public function restore(User $user, SpatieRole $role)
     {
        return $user->hasRole('admin');
     }
@@ -97,7 +97,7 @@ class RolePolicy
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Role $role)
+    public function forceDelete(User $user, SpatieRole $role)
     {
         return $user->hasRole('admin');
     }

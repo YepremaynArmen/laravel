@@ -3,6 +3,9 @@
 @section('content')
 <div class="container">
     <h1>Роли</h1>
+    @can('create role', \Spatie\Permission\Models\Role::class)
+        <a href="{{ route('roles.create') }}">Создать новую роль</a>
+    @endcan    
     <table class="table">
         <thead>
             <tr>
@@ -31,11 +34,14 @@
                         @endcan                        
                     </td>
                     <td>
-                        @can('create role', \Spatie\Permission\Models\Role::class)
-                            <a href="{{ route('roles.create') }}">Добавить роль</a>
-                        @endcan
-                    </td>
-                    
+                        <form action="{{ route('roles.destroy', ['role' => $role->id]) }}" method="POST">
+                          @can('delete role', \Spatie\Permission\Models\Role::class)
+                          @csrf
+                              @method('DELETE')
+                              <button type="submit" class="btn btn-danger" onclick="return confirm('Удалить запись?')">Удалить</button>
+                          @endcan
+                        </form>    
+                      </td>                        
                     
                 </tr>
             @endforeach

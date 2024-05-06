@@ -8,10 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Role extends Model
 {
     use HasFactory;
+    protected $attributes = [
+        'actions' => 'По умолчанию', // Значение по умолчанию для поля actions
+    ];    
     
-    public function users()
-    {
-        return $this->belongsToMany(User::class, 'user_roles');
-    }    
+    
+//    public function users()
+//    {
+//        return $this->belongsToMany(User::class, 'user_roles');
+//    }    
     
 }

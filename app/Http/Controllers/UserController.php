@@ -58,6 +58,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'birthdate' => 'required|date',
             'login' => 'required|string|max:255|unique:users',
+            'email' => 'required|string|max:255',
             'password' => 'required|string|min:8',
         ]);
         // Попытка сохранения пользователя в базу данных
@@ -65,6 +66,7 @@ class UserController extends Controller
         $user->name = $validatedData['name'];
         $user->birthdate = $validatedData['birthdate'];
         $user->login = $validatedData['login'];
+        $user->email = $validatedData['email'];
         $user->password = Hash::make($validatedData['password']); // Хеширование пароля перед сохранением
         $user->save(); // Сохранение пользователя в базу данных
         // Перенаправление на страницу со списком пользователей с сообщением об успешном добавлении

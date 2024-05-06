@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Role as SpatieRole;
 use Spatie\Permission\Models\Permission;
+use App\Models\Role;
 
 
 class RoleController extends Controller
@@ -16,7 +17,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::all();
+        $roles = SpatieRole::all();
         return view('roles.index', compact('roles'));
     }
 
@@ -40,8 +41,11 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $role = Role::create(['name' => $request->name]);
+        // Включаем поле 'actions' непосредственно в запрос create
+        $role = SpatieRole::create([
+            'name' => $request->name,
+            'actions' => 'По умолчанию' // Установить значение поля 'actions' при создании
+        ]);
         $role->syncPermissions($request->permissions);
         $this->authorize('update', $role);
         return redirect()->route('roles.index')->with('success', 'Роль создана успешно.');
@@ -67,7 +71,7 @@ class RoleController extends Controller
     
     public function edit($id)
     {
-        $role = Role::findById($id);
+        $role = SpatieRole::findById($id);
         $this->authorize('edit role', $role);
         $permissions = Permission::all();
         $rolePermissions = $role->permissions->pluck('id')->toArray();
@@ -78,8 +82,8 @@ class RoleController extends Controller
     // Обновление роли в базе данных
     public function update(Request $request, $id)
     {
-        $role = Role::findById($id);
-        $this->authorize('update role', $role);
+        $role = SpatieRole::findById($id);
+        $this->authorize('edit role', $role);
         $validatedData = $request->validate([
             'name' => 'required|max:255|unique:roles,name,' . $role->id,
             'permissions' => 'sometimes|array',
@@ -97,12 +101,17 @@ class RoleController extends Controller
     // Удаление роли
     public function destroy($id)
     {
-        $role = Role::findById($id);
-        $this->authorize('delete role', $role);
-        if ($role) {
-            $role->delete();
-        }
+//        $role = Role::findById($id);
+//        $this->authorize('delete role', $role);
+//        if ($role) {
+//            $role->delete();
+//        }
 
+        $role = Role::findOrFail($id); // Находим пользователя по идентификатору
+        $role->delete(); // Удаляем пользователя
         return redirect()->route('roles.index')->with('success', 'Роль удалена успешно.');
+        
+        
+        
     }    
 }
