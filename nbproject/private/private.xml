@@ -3,13 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/teacher_earmen/Обмен/www/AE/laravel/resources/views/users/index.blade.php</file>
-            <file>file:/home/teacher_earmen/Обмен/www/AE/laravel/app/Providers/AuthServiceProvider.php</file>
+            <file>file:/home/teacher_earmen/Обмен/www/AE/laravel/app/Http/Controllers/LoadController.php</file>
+            <file>file:/home/teacher_earmen/Обмен/www/AE/laravel/resources/views/loads/index.blade.php</file>
             <file>file:/home/teacher_earmen/Обмен/www/AE/laravel/routes/web.php</file>
-            <file>file:/home/teacher_earmen/Обмен/www/AE/laravel/app/Http/Controllers/RoleController.php</file>
-            <file>file:/home/teacher_earmen/Обмен/www/AE/laravel/app/Policies/RolePolicy.php</file>
-            <file>file:/home/teacher_earmen/Обмен/www/AE/laravel/resources/views/roles/index.blade.php</file>
-            <file>file:/home/teacher_earmen/Обмен/www/AE/laravel/app/Http/Controllers/UserController.php</file>
+            <file>file:/home/teacher_earmen/Обмен/www/AE/laravel/resources/views/layouts/app.blade.php</file>
         </group>
     </open-files>
 </project-private>

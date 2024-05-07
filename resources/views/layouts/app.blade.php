@@ -14,6 +14,9 @@
         <a class="" href="{{ route('users.index') }}">{{ __('Пользователи') }}</a> 
         <a class="" href="{{ route('permissions.index') }}">{{ __('Разрешения') }}</a> 
         
+        <a class="" href="{{ route('loads.index') }}">{{ __('Загрузки') }}</a> 
+
+        
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <!-- Вставьте здесь логотип и ссылки на навигацию, если необходимо -->

@@ -6,6 +6,7 @@ use App\Http\Controllers\MainController;
 use App\Http\Controllers\MyFormController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LoadController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -66,3 +67,7 @@ Route::resource('roles', \App\Http\Controllers\RoleController::class);
 // Разрешения
 Route::resource('permissions', \App\Http\Controllers\PermissionController::class);
 Route::put('/users/{user}/assign_role', [\App\Http\Controllers\UserController::class, 'assignRole'])->name('users.assign_role');
+
+Route::get('/loads', [LoadController::class, 'index'])->name('loads.index');
+Route::post('/upload', 'App\Http\Controllers\LoadController@upload');
+//Route::post('/upload', [LoadController::class, 'upload']);
