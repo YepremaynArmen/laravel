@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
+use Illuminate\Http\Request; // Убедитесь, что используете этот класс
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+
 
 class LoginController extends Controller
 {
@@ -43,5 +44,24 @@ class LoginController extends Controller
     {
         return view('auth.login');
     }
+    
+    
+    /**
+     * The user has been authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        // Сохраняем данные пользователя в сессию
+        session([
+            'user_id' => $user->id,
+            'roles' => $user->roles()->pluck('name')->toArray(), // Предполагается, что у модели User есть метод roles()
+        ]);
+        // Здесь вы также можете добавить любую другую логику, которая должна выполняться после аутентификации пользователя
+    }    
+    
     
 }

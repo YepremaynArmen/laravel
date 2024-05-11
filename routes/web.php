@@ -7,6 +7,7 @@ use App\Http\Controllers\MyFormController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoadController;
+use App\Http\Controllers\UserProfileController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,13 +40,17 @@ Route::get('/myform', [MyFormController::class, 'showForm'])->name('myform.show'
 Route::post('/myform', [MyFormController::class, 'submit'])->name('myform.submit');
 Route::get('/success-page', function () {return view('success');})->name('success.page');
 
-Route::get('/login', function () {return view('auth.login');})->middleware('guest')->name('login');
-Route::get('/register', function () {return view('auth.register');})->middleware('guest')->name('register');
-
+//Route::get('/login', function () {return view('auth.login');})->middleware('guest')->name('login');
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 // Маршрут для обработки запроса на вход
 Route::post('/login', [LoginController::class, 'login']);
-Route::get('/login', [LoginController::class, 'create'])->middleware('guest')->name('login');
+//Route::get('/login', [LoginController::class, 'create'])->middleware('guest')->name('login');
+
+
+
+Route::get('/register', function () {return view('auth.register');})->middleware('guest')->name('register');
+
+
 
 //Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
 //Route::post('/login', 'Auth\LoginController@login');
@@ -71,3 +76,6 @@ Route::put('/users/{user}/assign_role', [\App\Http\Controllers\UserController::c
 Route::get('/loads', [LoadController::class, 'index'])->name('loads.index');
 Route::post('/upload', 'App\Http\Controllers\LoadController@upload');
 //Route::post('/upload', [LoadController::class, 'upload']);
+
+Route::get('/user/profile', [UserProfileController::class, 'index'])->name('users.profile');
+//Route::get('/user/profile', function () {return 'Привет';});

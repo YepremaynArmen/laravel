@@ -51,27 +51,75 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        // Валидация входных данных
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'birthdate' => 'required|date',
-            'login' => 'required|string|max:255|unique:users',
-            'email' => 'required|string|max:255',
-            'password' => 'required|string|min:8',
-        ]);
-        // Попытка сохранения пользователя в базу данных
-        $user = new User;
-        $user->name = $validatedData['name'];
-        $user->birthdate = $validatedData['birthdate'];
-        $user->login = $validatedData['login'];
-        $user->email = $validatedData['email'];
-        $user->password = Hash::make($validatedData['password']); // Хеширование пароля перед сохранением
-        $user->save(); // Сохранение пользователя в базу данных
-        // Перенаправление на страницу со списком пользователей с сообщением об успешном добавлении
-        return redirect()->route('users.index')->with('success', 'Пользователь успешно добавлен.');
-    }
+//    public function store(Request $request)
+//    {
+//        // Валидация входных данных
+//        $validatedData = $request->validate([
+//            'name' => 'required|string|max:255',
+//            'birthdate' => 'required|date',
+//            'login' => 'required|string|max:255|unique:users',
+//            'email' => 'required|string|max:255',
+//            'password' => 'required|string|min:8',
+//        ]);
+//        // Попытка сохранения пользователя в базу данных
+//        $user = new User;
+//        $user->name = $validatedData['name'];
+//        $user->birthdate = $validatedData['birthdate'];
+//        $user->login = $validatedData['login'];
+//        $user->email = $validatedData['email'];
+//        $user->password = Hash::make($validatedData['password']); // Хеширование пароля перед сохранением
+//        //$user->save(); // Сохранение пользователя в базу данных
+//       
+//        if($user->save()) {
+//        // Сохранение Flash-сообщения об успехе
+//            return redirect()->route('users.index')->with('success', 'Пользователь успешно добавлен.');
+//        } else {
+//            // Сохранение Flash-сообщения об ошибке
+//            return back()->withErrors(['error' => 'Произошла ошибка при добавлении пользователя.'])->withInput();
+//        }          
+//        
+//        
+//        // Перенаправление на страницу со списком пользователей с сообщением об успешном добавлении
+//        return redirect()->route('users.index')->with('success', 'Пользователь успешно добавлен.');
+//    }
+    
+    
+            public function store(Request $request)
+              {
+                  // Валидация входных данных
+                  $validatedData = $request->validate([
+                      'name' => 'required|string|max:255',
+                      'birthdate' => 'required|date',
+                      'login' => 'required|string|max:255|unique:users',
+                      'email' => 'required|string|email|max:255|unique:users',
+                      'password' => 'required|string|min:8',
+                  ]);
+                  try {
+                      // Попытка сохранения пользователя в базу данных
+                      $user = User::create([
+                          'name' => $validatedData['name'],
+                          'birthdate' => $validatedData['birthdate'],
+                          'login' => $validatedData['login'],
+                          'email' => $validatedData['email'],
+                          'password' => Hash::make($validatedData['password']), // Хеширование пароля перед сохранением
+                      ]);
+                      // Сохранение Flash-сообщения об успешном добавлении пользователя
+                      return redirect()->route('users.index')->with('success', 'Пользователь успешно добавлен.');
+                  } catch (QueryException $exception) {
+                      $errorCode = $exception->errorInfo[1];
+                      if ($errorCode == 1062) {
+                          // Ошибка дублирования уникального ключа
+                          $errorMessage = 'Произошла ошибка при добавлении пользователя: email уже используется.';
+                      } else {
+                          // Другая ошибка базы данных
+                          $errorMessage = 'Произошла ошибка при добавлении пользователя.';
+                      }    
+
+                      // Возвращение на форму с сообщением об ошибке и сохранением введенных данных
+                      return back()->withErrors(['error' => $errorMessage])->withInput($request->except('password'));
+                  }
+              }
+          }    
 
     /**
      * Display the specified resource.
