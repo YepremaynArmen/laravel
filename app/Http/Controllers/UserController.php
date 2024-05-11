@@ -119,57 +119,58 @@ class UserController extends Controller
                       return back()->withErrors(['error' => $errorMessage])->withInput($request->except('password'));
                   }
               }
-          }    
+              
+          
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $user = User::findOrFail($id);
-        return view('users.show', compact('user'));
-    }
+            /**
+             * Display the specified resource.
+             *
+             * @param  int  $id
+             * @return \Illuminate\Http\Response
+             */
+            public function show($id)
+            {
+                $user = User::findOrFail($id);
+                return view('users.show', compact('user'));
+            }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-       $user = User::findOrFail($id);
-       return view('users.edit', compact('user'));
-    }
+            /**
+             * Show the form for editing the specified resource.
+             *
+             * @param  int  $id
+             * @return \Illuminate\Http\Response
+             */
+            public function edit($id)
+            {
+               $user = User::findOrFail($id);
+               return view('users.edit', compact('user'));
+            }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $user = User::findOrFail($id); // Находим пользователя по идентификатору
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'birthdate' => 'required|date',
-            'login' => 'required|unique:users,login,' . $user->id,
-            'email' => 'required|unique:users,email,' ,
-            'password' => 'sometimes|nullable|min:8',
-        ]);
-        if (!empty($validatedData['password'])) {
-            $validatedData['password'] = bcrypt($validatedData['password']);
-        } else {
-            unset($validatedData['password']);
-        }
-        $user->update($validatedData);
-        return redirect()->route('users.index')->with('success', 'Данные пользователя успешно обновлены.');
-    }
+            /**
+             * Update the specified resource in storage.
+             *
+             * @param  \Illuminate\Http\Request  $request
+             * @param  int  $id
+             * @return \Illuminate\Http\Response
+             */
+            public function update(Request $request, $id)
+            {
+                $user = User::findOrFail($id); // Находим пользователя по идентификатору
+                $validatedData = $request->validate([
+                    'name' => 'required|max:255',
+                    'birthdate' => 'required|date',
+                    'login' => 'required|unique:users,login,' . $user->id,
+                    'email' => 'required|unique:users,email,' ,
+                    'password' => 'sometimes|nullable|min:8',
+                ]);
+                if (!empty($validatedData['password'])) {
+                    $validatedData['password'] = bcrypt($validatedData['password']);
+                } else {
+                    unset($validatedData['password']);
+                }
+                $user->update($validatedData);
+                return redirect()->route('users.index')->with('success', 'Данные пользователя успешно обновлены.');
+            }
     
 
     
@@ -199,5 +200,5 @@ class UserController extends Controller
         return back()->with('error', 'Не удалось назначить роль.');
     }    
     
-    
+
 }
