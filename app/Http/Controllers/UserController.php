@@ -44,7 +44,7 @@ class UserController extends Controller
             $usersQuery->orderBy('created_at', 'desc');
         }
         // Пагинация результатов по 10 пользователей на страницу
-        $users = $usersQuery->paginate(10)->withQueryString();
+        $users = $usersQuery->paginate(5)->withQueryString();
         // Получение списка всех ролей с использованием метода pluck
         // Для отображения в выпадающем списке фильтра на странице
         $roles = Role::pluck('name', 'id');

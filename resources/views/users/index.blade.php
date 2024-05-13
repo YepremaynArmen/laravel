@@ -9,6 +9,21 @@
     th a.active {
         color: #FF0000; /* Красный цвет для активной колонки */
     }
+    .pagination svg {
+        width: 20px; /* Указываем размер в пикселях */
+        height: 20px; /* Указываем размер в пикселях */
+    }  
+    nav.pagination .page-link svg {
+        width: 20px !important;
+        height: 20px !important;
+    }    
+    .pagination li a {
+        /* Примеры свойств, которые вы можете отредактировать */
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+    }
+    
+    
 </style>
 <form action="{{ route('users.index') }}" method="GET" id="searchForm">
     <input type="text" name="search" id="searchField" placeholder="Поиск по имени" value="{{ request('search') }}">
@@ -118,5 +133,7 @@ function clearSearchField() {
             
         </tbody>
     </table>
+    {{-- Ссылки пагинации --}}
+    {{ $users->links() }}
 </div>
 @endsection
