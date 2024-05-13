@@ -18,21 +18,38 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+ public function index(Request $request)
+{
         // Проверка доступа к странице
         if (Gate::denies('view-users-page', auth()->user())) {
             abort(403);
         }
-        // Получение списка пользователей и отображение страницы
-        //$users = User::all();
-
-        $users = User::all();
-        $roles = Role::all();
-        return view('users.index', compact('users', 'roles'));        
-        
-        
-        //return view('users.index', compact('users'));
+        $usersQuery = User::query();
+        // Фильтрация пользователей по имени, если указан запрос поиска
+        if ($search = $request->input('search')) {
+            $usersQuery->where('name', 'like', '%' . $search . '%');
+        }
+        // Фильтрация пользователей по ролям, если указана роль
+        if ($roleFilter = $request->input('role')) {
+            $usersQuery->whereHas('roles', function ($query) use ($roleFilter) {
+                $query->where('roles.id', $roleFilter);
+            });
+        }
+        // Сортировка пользователей в зависимости от параметров запроса
+        if ($sort = $request->input('sort')) {
+            $direction = $request->input('direction', 'asc') == 'asc' ? 'asc' : 'desc';
+            $usersQuery->orderBy($sort, $direction);
+        } else {
+            // Сортировка по умолчанию, если параметры сортировки не предоставлены
+            $usersQuery->orderBy('created_at', 'desc');
+        }
+        // Пагинация результатов по 10 пользователей на страницу
+        $users = $usersQuery->paginate(10)->withQueryString();
+        // Получение списка всех ролей с использованием метода pluck
+        // Для отображения в выпадающем списке фильтра на странице
+        $roles = Role::pluck('name', 'id');
+        // Отправка данных пользователей и ролей в представление
+        return view('users.index', compact('users', 'roles'));
     }
 
     /**

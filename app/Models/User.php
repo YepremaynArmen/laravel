@@ -29,7 +29,7 @@ class User extends Authenticatable // Наследуйтесь от Authenticata
         'email'
         // Добавьте новые поля здесь
     ];
-    
+    protected $dates = ['created_at', 'updated_at'];
 //    public function roles()
 //    {
 //        return $this->belongsToMany(Role::class, 'user_roles');
