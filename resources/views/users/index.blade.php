@@ -9,19 +9,18 @@
     th a.active {
         color: #FF0000; /* Красный цвет для активной колонки */
     }
-    .pagination svg {
-        width: 20px; /* Указываем размер в пикселях */
-        height: 20px; /* Указываем размер в пикселях */
-    }  
-    nav.pagination .page-link svg {
-        width: 20px !important;
-        height: 20px !important;
-    }    
-    .pagination li a {
-        /* Примеры свойств, которые вы можете отредактировать */
-        padding: 0.5rem 1rem;
-        font-size: 1rem;
+
+    .pagination {
+        display: flex;
+        list-style-type: none; /* Убирает маркеры списка */
+        padding-left: 0; /* Убирает отступ слева, связанный с маркерами списка */
+        justify-content: center; /* Центрирование пагинации, если нужно */
     }
+
+    .pagination .page-link {
+        padding: 0.5rem 0.75rem; /* Устанавливает размер паддинга для ссылок */
+        font-size: 16px; /* Устанавливает размер шрифта для ссылок. Измените значение по желанию. */
+    }    
     
     
 </style>
@@ -40,10 +39,29 @@
 </form>
 <script>
 // Функция для очистки поля ввода и отправки формы
-function clearSearchField() {
-    document.getElementById('searchField').value = '';
-    document.getElementById('searchForm').submit();
-}
+    function clearSearchField() {
+        document.getElementById('searchField').value = '';
+        document.getElementById('searchForm').submit();
+    }
+    
+    document.addEventListener('DOMContentLoaded', (event) => {
+        // Подождите, пока весь DOM загрузится
+        const paginationArrows = document.querySelectorAll('.pagination a[rel="next"], .pagination a[rel="prev"]');
+        // Проверьте, найдены ли элементы
+        if (paginationArrows.length > 0) {
+            paginationArrows.forEach(arrow => {
+                // Найдите элемент SVG внутри ссылки
+                const svg = arrow.querySelector('svg');
+                if (svg) {
+                    // Установите размеры SVG
+                    svg.setAttribute('width', '20');
+                    svg.setAttribute('height', '20');
+                }
+            });
+        }
+    });    
+    
+    
 </script>
 
 <div class="container">
@@ -134,6 +152,7 @@ function clearSearchField() {
         </tbody>
     </table>
     {{-- Ссылки пагинации --}}
-    {{ $users->links() }}
+<!--    {{ $users->links() }}-->
+    {{ $users->links('vendor.pagination.bootstrap-4') }}
 </div>
 @endsection

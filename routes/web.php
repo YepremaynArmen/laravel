@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoadController;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\PhotoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -79,3 +80,4 @@ Route::post('/upload', 'App\Http\Controllers\LoadController@upload');
 
 Route::get('/user/profile', [UserProfileController::class, 'index'])->name('users.profile');
 //Route::get('/user/profile', function () {return 'Привет';});
+Route::resource('photos', PhotoController::class);
