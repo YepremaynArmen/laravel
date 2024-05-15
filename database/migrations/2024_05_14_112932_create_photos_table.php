@@ -19,6 +19,9 @@ class CreatePhotosTable extends Migration
             $table->text('description')->nullable();
             $table->string('image_path');
             $table->timestamps();
+            $table->unsignedBigInteger('category_id')->nullable(); // Добавляем поле для связи с категорией
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');            
+            
         });
     }
 

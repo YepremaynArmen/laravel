@@ -7,6 +7,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- Ссылки на стили -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 </head>
 <body>
     <div id="app">
@@ -16,6 +17,7 @@
                     <a class="nav-link-left1" href="{{ route('users.index') }}">{{ __('Пользователи') }}</a> 
                     <a class="nav-link-left1" href="{{ route('permissions.index') }}">{{ __('Разрешения') }}</a> 
                     <a class="nav-link-left1" href="{{ route('loads.index') }}">{{ __('Загрузки') }}</a> 
+                    <a class="nav-link-left1" href="{{ route('categories.index') }}">{{ __('Категории') }}</a> 
                     <a class="nav-link-left1" href="{{ route('photos.index') }}">{{ __('Фотогалерея') }}</a>
 
                 </div>

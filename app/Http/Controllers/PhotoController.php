@@ -5,53 +5,58 @@ namespace App\Http\Controllers;
 use App\Models\Photo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Category;
 
 class PhotoController extends Controller
 {
     // Отображение списка фотографий
+    
     public function index(Request $request)
     {
-        // Получаем параметры сортировки и фильтрации из запроса
-        $sortField = $request->get('sort', 'created_at'); // По умолчанию сортируем по дате создания
-        $sortDirection = $request->get('direction', 'desc'); // По умолчанию сортировка по убыванию
-
-        // Пример фильтрации по категории, если она передана
+        $sortField = $request->get('sort', 'created_at');
+        $sortDirection = $request->get('direction', 'desc');
         $category = $request->get('category');
-
         // Получаем список фотографий с учетом сортировки и фильтрации
-        // Добавьте ->where('category', $category) если необходима фильтрация по категории и параметр category присутствует в запросе
-        $photos = Photo::when($category, function ($query, $category) {
-                return $query->where('category', $category);
+        $photos = Photo::with('category') // Жадная загрузка категорий
+            ->when($category, function ($query, $category) {
+                return $query->where('category_id', $category);
             })
             ->orderBy($sortField, $sortDirection)
-            ->paginate(10); // Используйте пагинацию, чтобы отображать по 10 элементов на странице
-
-        // Возвращаем представление с передачей в него списка фотографий
+            ->paginate(10); // Пагинация
         return view('photos.index', compact('photos'));
-    }
+    }    
 
 
     // Показ формы для создания новой фотографии
     public function create()
     {
         $files = Storage::files('public/uploads');
-        // Передаем список файлов в представление
-        return view('photos.create', compact('files'));
+        $files = array_map(function ($file) {
+            return basename($file);
+        }, $files);
+        $categories = Category::all(); // Получаем список всех категорий
+        return view('photos.create', compact('files', 'categories')); // Передаем список файлов и категорий в представление
     }
 
     // Сохранение новой фотографии в базе данных
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required',
-            'image' => 'required|image|max:2048',
+            'title' => 'required|string|max:255', // Правило валидации для названия
+            'description' => 'nullable|string', // Описание может быть пустым
+            'image' => 'required|image', // Загружаемый файл должен быть изображением
+            'category_id' => 'nullable|exists:categories,id', // Категория не обязательна, но если указана, должна существовать
         ]);
-        $imagePath = $request->file('image')->store('photos', 'public');
-        $photo = new Photo([
+        // Обработка загрузки файла
+        $imagePath = $request->file('image')->store('public/uploads');
+        $imagePath = basename($imagePath); // Получаем только имя файла для сохранения в базе данных
+        // Создание новой фотографии в базе данных
+        Photo::create([
             'title' => $request->title,
+            'description' => $request->description,
             'image_path' => $imagePath,
+            'category_id' => $request->category_id,
         ]);
-        $photo->save();
         return redirect()->route('photos.index')->with('success', 'Фотография успешно добавлена.');
     }
     // Отображение конкретной фотографии
@@ -63,21 +68,37 @@ class PhotoController extends Controller
     // Показ формы для редактирования фотографии
     public function edit(Photo $photo)
     {
-        return view('photos.edit', compact('photo'));
+        $categories = Category::all(); // Получаем список всех категорий для dropdown
+        return view('photos.edit', compact('photo', 'categories'));
     }
 
     // Обновление фотографии в базе данных
-    public function update(Request $request, Photo $photo)
+   public function update(Request $request, Photo $photo)
     {
         $request->validate([
             'title' => 'required',
-            // Другие правила валидации
+            'description' => 'nullable',
+            'category_id' => 'required|exists:categories,id',
+            'image' => 'required|image', // Загружаемый файл должен быть изображением
+
         ]);
 
-        $photo->update($request->all());
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('public/uploads');
+            $imagePath = basename($path); // Получаем только имя файла
+           
+            $dataToUpdate = [
+                'title' => $request->title,
+                'description' => $request->description,
+                'category_id' => $request->category_id,
+                'image_path' => $imagePath,
+            ];
+            $photo->update($dataToUpdate);
+        }
+       
         return redirect()->route('photos.index')->with('success', 'Фотография успешно обновлена.');
     }
-
+    
     // Удаление фотографии
     public function destroy(Photo $photo)
     {

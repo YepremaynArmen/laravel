@@ -9,6 +9,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoadController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\CategoryController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -81,3 +82,9 @@ Route::post('/upload', 'App\Http\Controllers\LoadController@upload');
 Route::get('/user/profile', [UserProfileController::class, 'index'])->name('users.profile');
 //Route::get('/user/profile', function () {return 'Привет';});
 Route::resource('photos', PhotoController::class);
+Route::resource('categories', CategoryController::class);// Маршруты для категорий
+//Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
+//// Маршрут для обновления категории
+//Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
+//// Маршрут для удаления категории
+//Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
