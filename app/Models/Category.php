@@ -18,4 +18,20 @@ class Category extends Model
     {
         return $this->hasMany(Category::class, 'parent_id');
     }
+    
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+    // В Product.php
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+    public function prices()
+    {
+        return $this->hasMany(Price::class);
+    }    
+    
+    
 }
