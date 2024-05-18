@@ -25,7 +25,13 @@ class PriceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'price' => 'required|numeric',
+            'date' => 'required|date'
+        ]);
+        Price::create($validatedData);
+        return redirect()->route('products.edit', $validatedData['product_id'])->with('success', 'Цена успешно добавлена.');
     }
 
     /**
@@ -57,8 +63,10 @@ class PriceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Price $price)
     {
-        //
+        $productId = $price->product_id;
+        $price->delete();
+        return redirect()->route('products.edit', $productId)->with('success', 'Цена удалена.');
     }
 }

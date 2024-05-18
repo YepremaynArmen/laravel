@@ -18,6 +18,7 @@
                     <a class="nav-link-left1" href="{{ route('permissions.index') }}">{{ __('Разрешения') }}</a> 
                     <a class="nav-link-left1" href="{{ route('loads.index') }}">{{ __('Загрузки') }}</a> 
                     <a class="nav-link-left1" href="{{ route('categories.index') }}">{{ __('Категории') }}</a> 
+                    <a class="nav-link-left1" href="{{ route('products.index') }}">{{ __('Товары') }}</a>
                     <a class="nav-link-left1" href="{{ route('photos.index') }}">{{ __('Фотогалерея') }}</a>
 
                 </div>

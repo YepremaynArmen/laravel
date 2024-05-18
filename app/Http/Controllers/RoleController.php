@@ -27,7 +27,7 @@ class RoleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-  san  {
+    {
         $this->authorize('create role', SpatieRole::class);
         $permissions = Permission::all();
         return view('roles.create', compact('permissions'));

@@ -10,8 +10,8 @@ use App\Http\Controllers\LoadController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\PriceController;
+use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\PriceController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -64,5 +64,5 @@ Route::get('/user/profile', [UserProfileController::class, 'index'])->name('user
 Route::resource('photos', PhotoController::class);
 Route::resource('categories', CategoryController::class);// Маршруты для категорий
 
-Route::apiResource('products', ProductController::class);
+Route::resource('products', ProductController::class);
 Route::apiResource('prices', PriceController::class);
