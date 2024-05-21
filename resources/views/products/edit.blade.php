@@ -22,34 +22,10 @@
             </select>
         </div>
         <button type="submit" class="btn btn-success">Обновить</button>
+        <button type="button" class="btn btn-secondary" onclick="window.history.back();">Отмена</button>
     </form>
 </div>
 
-<h3>Цены товара</h3>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Цена</th>
-            <th>Дата</th>
-            <th>Действия</th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach ($product->prices as $price)
-        <tr>
-            <td>{{ $price->price }}</td>
-            <td>{{ $price->date }}</td>
-            <td>
-                <form action="{{ route('prices.destroy', $price->id) }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-<button type="submit" class="btn btn-danger" onclick="return confirm('Вы уверены, что хотите удалить эту цену?');">Удалить</button>
-                </form>
-            </td>
-        </tr>
-    @endforeach
-    </tbody>
-</table>
 <a href="#" class="btn btn-primary" onclick="$('#priceModal').modal('show');">Добавить цену</a>
 <!-- Модальное окно для добавления новой цены -->
 <div class="modal fade" id="priceModal" tabindex="-1" role="dialog" aria-labelledby="priceModalLabel" aria-hidden="true">
@@ -82,4 +58,31 @@
         </form>
     </div>
 </div>
-@endsection                
+
+<h3>Цены товара</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Цена</th>
+            <th>Дата</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach ($product->prices as $price)
+        <tr>
+            <td>{{ $price->price }}</td>
+            <td>{{ $price->date }}</td>
+            <td>
+                <form action="{{ route('prices.destroy', $price->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Вы уверены, что хотите удалить эту цену?');">Удалить</button>
+                </form>
+            </td>
+        </tr>
+    @endforeach
+    </tbody>
+</table>
+
+@endsection

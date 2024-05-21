@@ -11,6 +11,9 @@
                 <th>Название</th>
                 <th>Описание</th>
                 <th>Категория</th>
+                <th>Актуальная цена</th>
+                <th>Дата цены</th>                
+                
                 <th>Действия</th>
             </tr>
         </thead>
@@ -21,6 +24,8 @@
                 <td>{{ $product->name }}</td>
                 <td>{{ $product->description }}</td>
                 <td>{{ $product->category ? $product->category->name : 'Нет категории' }}</td>
+                <td>{{ $product->current_price }}</td>
+                <td>{{ $product->current_price_date }}</td>                
                 <td>
                     <a href="{{ route('products.edit', $product->id) }}" class="btn btn-secondary">Редактировать</a>
                     <form action="{{ route('products.destroy', $product->id) }}" method="POST" style="display:inline;">
