@@ -1,0 +1,46 @@
+[90m= [39m[34;4mApp\Models\Role[39;24m {#6067
+    [34mid[39m: [35m1[39m,
+    [34mname[39m: "[32madmin[39m",
+    [34mactions[39m: "[32m"admin actions"[39m",
+    [34mguard_name[39m: "[32mweb[39m",
+    [34mcreated_at[39m: "[32m2024-05-22 06:47:22[39m",
+    [34mupdated_at[39m: "[32m2024-05-22 06:47:22[39m",
+    [34mpermissions[39m: [34;4mIlluminate\Database\Eloquent\Collection[39;24m {#6069
+      [34mall[39m: [
+        [34;4mSpatie\Permission\Models\Permission[39;24m {#6047
+          [34mid[39m: [35m1[39m,
+          [34mname[39m: "[32mview users[39m",
+          [34mguard_name[39m: "[32mweb[39m",
+          [34mcreated_at[39m: "[32m2024-05-22 06:47:22[39m",
+          [34mupdated_at[39m: "[32m2024-05-22 06:47:22[39m",
+          [34mpivot[39m: [34;4mIlluminate\Database\Eloquent\Relations\Pivot[39;24m {#6002
+            [34mrole_id[39m: [35m1[39m,
+            [34mpermission_id[39m: [35m1[39m,
+          },
+        },
+        [34;4mSpatie\Permission\Models\Permission[39;24m {#6084
+          [34mid[39m: [35m2[39m,
+          [34mname[39m: "[32mcreate users[39m",
+          [34mguard_name[39m: "[32mweb[39m",
+          [34mcreated_at[39m: "[32m2024-05-22 06:47:44[39m",
+          [34mupdated_at[39m: "[32m2024-05-22 06:47:44[39m",
+          [34mpivot[39m: [34;4mIlluminate\Database\Eloquent\Relations\Pivot[39;24m {#6099
+            [34mrole_id[39m: [35m1[39m,
+            [34mpermission_id[39m: [35m2[39m,
+          },
+        },
+        [34;4mSpatie\Permission\Models\Permission[39;24m {#6066
+          [34mid[39m: [35m3[39m,
+          [34mname[39m: "[32medit users[39m",
+          [34mguard_name[39m: "[32mweb[39m",
+          [34mcreated_at[39m: "[32m2024-05-22 06:47:44[39m",
+          [34mupdated_at[39m: "[32m2024-05-22 06:47:44[39m",
+          [34mpivot[39m: [34;4mIlluminate\Database\Eloquent\Relations\Pivot[39;24m {#6092
+            [34mrole_id[39m: [35m1[39m,
+            [34mpermission_id[39m: [35m3[39m,
+          },
+        },
+      ],
+    },
+  }
+

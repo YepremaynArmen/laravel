@@ -3,16 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/teacher_earmen/Обмен/www/AE/laravel/resources/views/users/index.blade.php</file>
-            <file>file:/home/teacher_earmen/Обмен/www/AE/laravel/app/Providers/AuthServiceProvider.php</file>
+            <file>file:/home/teacher_earmen/Обмен/www/AE/laravel/resources/views/products/edit.blade.php</file>
+            <file>file:/home/teacher_earmen/Обмен/www/AE/laravel/resources/views/products/index.blade.php</file>
             <file>file:/home/teacher_earmen/Обмен/www/AE/laravel/routes/web.php</file>
-            <file>file:/home/teacher_earmen/Обмен/www/AE/laravel/app/Http/Controllers/RoleController.php</file>
-            <file>file:/home/teacher_earmen/Обмен/www/AE/laravel/app/Policies/RolePolicy.php</file>
-            <file>file:/home/teacher_earmen/Обмен/www/AE/laravel/database/migrations/2024_05_16_104612_create_products_table.php</file>
-            <file>file:/home/teacher_earmen/Обмен/www/AE/laravel/resources/views/roles/index.blade.php</file>
-            <file>file:/home/teacher_earmen/Обмен/www/AE/laravel/app/Http/Controllers/UserController.php</file>
-            <file>file:/home/teacher_earmen/Обмен/www/AE/laravel/database/migrations/2024_05_16_104739_create_prices_table.php</file>
-            <file>file:/home/teacher_earmen/Обмен/www/AE/laravel/app/Models/Category.php</file>
+            <file>file:/home/teacher_earmen/Обмен/www/AE/laravel/resources/views/products/show.blade.php</file>
+            <file>file:/home/teacher_earmen/Обмен/www/AE/laravel/resources/views/products/create.blade.php</file>
+            <file>file:/home/teacher_earmen/Обмен/www/AE/laravel/app/Http/Controllers/Api/PriceController.php</file>
+            <file>file:/home/teacher_earmen/Обмен/www/AE/laravel/app/Http/Controllers/Api/ProductController.php</file>
+            <file>file:/home/teacher_earmen/Обмен/www/AE/laravel/app/Models/Product.php</file>
         </group>
     </open-files>
 </project-private>

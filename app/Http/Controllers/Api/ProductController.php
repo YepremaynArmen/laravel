@@ -78,4 +78,29 @@ class ProductController extends Controller
          $product->delete();
          return redirect()->route('products.index')->with('success', 'Товар удален.');
      }
+     
+     
+    public function getCurrentPrice($productId)
+    {
+        $product = Product::find($productId);
+
+        if (!$product) {
+            return response()->json([
+                'message' => 'Product not found',
+            ], 404);
+        }
+
+        $currentPrice = $product->prices()->orderBy('date', 'desc')->first();
+
+        if ($currentPrice) {
+            return response()->json([
+                'price' => $currentPrice->price,
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Price not found',
+            ], 404);
+        }
+    }
+     
 }

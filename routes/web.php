@@ -66,3 +66,4 @@ Route::resource('categories', CategoryController::class);// Маршруты д�
 
 Route::resource('products', ProductController::class);
 Route::apiResource('prices', PriceController::class);
+Route::get('api/products/{product}/current-price', [ProductController::class, 'getCurrentPrice']);
