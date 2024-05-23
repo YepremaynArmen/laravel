@@ -70,6 +70,9 @@ class CategoryController extends Controller
         $request->validate(['name' => 'required']);
         $category = new Category(['name' => $request->name, 'parent_id' => $request->parent_id]);
         $category->save();
+        if ($request->wantsJson()) {
+            return response()->json(category, 201);
+        }          
         return redirect()->route('categories.index');
     }
 

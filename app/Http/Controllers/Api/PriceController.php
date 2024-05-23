@@ -27,11 +27,17 @@ class PriceController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'product_id' => 'required|exists:products,id',
-            'price' => 'required|numeric',
-            'date' => 'required|date'
+        'product_id' => 'required|exists:products,id',
+        'price' => 'required|numeric',
+        'date' => 'required|date'
         ]);
-        Price::create($validatedData);
+        // Создаем цену и сохраняем созданный экземпляр в переменной $price
+        $price = Price::create($validatedData);
+        // Проверяем, что запрос ожидает JSON ответ
+        if ($request->wantsJson()) {
+            return response()->json($price, 201); // Возвращаем $price, который содержит данные о цене
+        }
+        // Для не-API запросов выполняем редирект
         return redirect()->route('products.edit', $validatedData['product_id'])->with('success', 'Цена успешно добавлена.');
     }
 

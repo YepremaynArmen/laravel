@@ -32,4 +32,32 @@ class ProductControllerTest extends TestCase
             'price' => $price->price,
         ]);
     }
+    
+    public function test_get_price_on_specific_date()
+    {
+        $product = Product::factory()->create();
+        $price1 = Price::factory()->create([
+            'product_id' => $product->id,
+            'price' => 99.99,
+            'date' => '2024-01-01'
+        ]);
+        $price2 = Price::factory()->create([
+            'product_id' => $product->id,
+            'price' => 100.00,
+            'date' => '2024-01-10'
+        ]);
+        $price3 = Price::factory()->create([
+            'product_id' => $product->id,
+            'price' => 110.00,
+            'date' => '2024-01-21'
+        ]);
+        $response = $this->get("/api/products/{$product->id}/price-on-date?date=2024-01-05");
+        // Проверяем, что ответ содержит статус код 200
+        $response->assertStatus(200);
+        // Проверяем, что ответ содержит правильную цену
+        $response->assertJson([
+            'price' => 99.99
+        ]);        
+    }    
+    
 }

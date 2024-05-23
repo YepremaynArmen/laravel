@@ -48,8 +48,13 @@ class ProductController extends Controller
             'category_id' => 'required|exists:categories,id'
         ]);
         $product = Product::create($validatedData);
+        // Проверяем, ожидает ли клиент JSON-ответ (API-запрос)
+        if ($request->wantsJson()) {
+            return response()->json($product, 201);
+        }
+        // Для веб-запросов выполняем редирект
         return redirect()->route('products.index')->with('success', 'Товар успешно добавлен.');
-    }     
+    }   
      
     public function edit($id)
     {
@@ -102,5 +107,39 @@ class ProductController extends Controller
             ], 404);
         }
     }
-     
+    
+    
+    public function getPriceOnDate(Product $product, Request $request)
+    {
+        // Получаем дату из query-параметра 'date'
+        $date = $request->query('date');
+        // Проверяем, что дата была передана
+        if (!$date) {
+            return response()->json(['error' => 'No date provided'], 400);
+        }
+        // Ищем цену для продукта, которая актуальна на переданную дату
+        $price = $product->prices()
+                         ->where('date', '<=', $date)
+                         ->orderBy('date', 'desc')
+                         ->first();
+        // Если цена найдена, возвращаем ее, иначе возвращаем ошибку
+        if ($price) {
+            return response()->json(['price' => $price->price]);
+        } else {
+            return response()->json(['error' => 'Price not found for the specified date'], 404);
+        }
+    }   
+ 
+
+    public function show(Product $product)
+    {
+        // Предполагаем, что у Product есть связь с Price через метод prices()
+        $latestPrice = $product->prices()->latest('date')->first();
+        return response()->json([
+            'id' => $product->id,
+            'name' => $product->name,
+            'latest_price' => $latestPrice ? $latestPrice->price : null
+        ]);
+    }
+    
 }

@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use App\Models\User;
 
 class ExampleTest extends TestCase
 {
@@ -12,10 +13,19 @@ class ExampleTest extends TestCase
      *
      * @return void
      */
-    public function test_example()
+    public function testExample()
     {
-        $response = $this->get('/');
+        // Создаем пользователя
+        $user = User::factory()->create();
 
+        // Действуем от лица созданного пользователя
+        $response = $this->actingAs($user)->get(route('users.show', $user->id));
+
+        // Проверяем, что ответ сервера успешный (статус 200)
         $response->assertStatus(200);
+
+        // Проверяем, что в ответе есть определенный текст (например, имя пользователя)
+        // Это дополнительная проверка для удостоверения, что страница содержит ожидаемые данные
+        $response->assertSee(e($user->name));
     }
 }
